@@ -3,11 +3,19 @@ defmodule FacebookMessenger.Entry do
   Facebook entry structure
   """
   @derive [Poison.Encoder]
-  defstruct [:id, :time, :messaging]
+  defstruct [
+    :id,
+    :changed_fields,
+    :changes,
+    :time,
+    :messaging
+  ]
 
   @type t :: %__MODULE__{
     id: String.t,
+    changed_fields: [String.t],
+    changes: [map],
+    time: integer,
     messaging: FacebookMessenger.Messaging.t,
-    time: integer
   }
 end

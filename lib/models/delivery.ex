@@ -1,6 +1,8 @@
 defmodule FacebookMessenger.Delivery do
   @moduledoc """
-  Facebook entry structure
+  Facebook delivery structure
+
+  https://developers.facebook.com/docs/messenger-platform/webhook-reference/message-delivered
   """
   @derive [Poison.Encoder]
   defstruct [

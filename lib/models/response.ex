@@ -5,7 +5,15 @@ defmodule FacebookMessenger.Response do
 
   @derive [Poison.Encoder]
   @postback_regex ~r/postback/
-  defstruct [:object, :entry]
+  defstruct [
+    :object,
+    :entry
+  ]
+
+  @type t :: %__MODULE__{
+    object: String.t,
+    entry: FacebookMessenger.Entry.t
+  }
 
   @doc """
   Decode a map into a `FacebookMessenger.Response`
@@ -39,11 +47,10 @@ defmodule FacebookMessenger.Response do
   """
   @spec message_texts(FacebookMessenger.Response) :: [String.t]
   def message_texts(%{entry: entries}) do
-    messaging =
-      entries
-      |> get_messaging_struct
-      |> Enum.map(&( &1 |> Map.get(:message)
-      |> Map.get(:text)))
+    entries
+    |> get_messaging_struct
+    |> Enum.map(&( &1 |> Map.get(:message)
+    |> Map.get(:text)))
   end
 
   @doc """
@@ -69,8 +76,8 @@ defmodule FacebookMessenger.Response do
 
   defp get_parser(param) when is_binary(param) do
     cond do
-      String.match?(param, @postback_regex) -> postback_parser
-      true -> text_message_parser
+      String.match?(param, @postback_regex) -> postback_parser()
+      true -> text_message_parser()
     end
   end
 
@@ -78,8 +85,8 @@ defmodule FacebookMessenger.Response do
     messaging = entries |> get_messaging_struct("messaging") |> hd
 
     cond do
-      Map.has_key?(messaging, "postback") -> postback_parser
-      Map.has_key?(messaging, "message") -> text_message_parser
+      Map.has_key?(messaging, "postback") -> postback_parser()
+      Map.has_key?(messaging, "message") -> text_message_parser()
     end
   end
 
@@ -107,13 +114,11 @@ defmodule FacebookMessenger.Response do
 
   defp decoding_map(messaging_parser) do
     %FacebookMessenger.Response{
-      "entry": [%FacebookMessenger.Entry{
-        "messaging": [messaging_parser]
-      }]}
+      "entry": [
+        %FacebookMessenger.Entry{
+          "messaging": [messaging_parser]
+        }
+      ]
+    }
   end
-
-   @type t :: %__MODULE__{
-    object: String.t,
-    entry: FacebookMessenger.Entry.t
-  }
 end

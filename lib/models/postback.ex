@@ -1,6 +1,8 @@
 defmodule FacebookMessenger.Postback do
   @moduledoc """
-    Facebook postback structure
+  Facebook postback structure
+
+  https://developers.facebook.com/docs/messenger-platform/webhook-reference/postback
   """
 
   @derive [Poison.Encoder]
@@ -8,6 +10,6 @@ defmodule FacebookMessenger.Postback do
 
   @type t :: %__MODULE__{
     payload: String.t,
-    referral: FacebookMessenger.Referral
+    referral: FacebookMessenger.Referral.t,
   }
 end
