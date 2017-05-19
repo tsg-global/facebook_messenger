@@ -6,7 +6,7 @@ defmodule FacebookMessenger.User do
   @derive [Poison.Encoder]
   defstruct [:id]
 
-  @type t :: %FacebookMessenger.User{
+  @type t :: %__MODULE__{
     id: String.t
   }
 end

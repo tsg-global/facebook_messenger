@@ -112,7 +112,7 @@ defmodule FacebookMessenger.Response do
       }]}
   end
 
-   @type t :: %FacebookMessenger.Response{
+   @type t :: %__MODULE__{
     object: String.t,
     entry: FacebookMessenger.Entry.t
   }

@@ -4,10 +4,16 @@ defmodule FacebookMessenger.Referral do
   """
 
   @derive [Poison.Encoder]
-  defstruct [:ref, :source, :type]
+  defstruct [
+    :ref,
+    :ad_id,
+    :source,
+    :type
+  ]
 
-  @type t :: %FacebookMessenger.Referral{
+  @type t :: %__MODULE__{
     ref: String.t,
+    ad_id: String.t,
     source: String.t,
     type: String.t
   }

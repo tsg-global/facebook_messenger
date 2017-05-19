@@ -6,7 +6,7 @@ defmodule FacebookMessenger.Postback do
   @derive [Poison.Encoder]
   defstruct [:payload, :referral]
 
-  @type t :: %FacebookMessenger.Postback{
+  @type t :: %__MODULE__{
     payload: String.t,
     referral: FacebookMessenger.Referral
   }

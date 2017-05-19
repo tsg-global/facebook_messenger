@@ -5,7 +5,7 @@ defmodule FacebookMessenger.Entry do
   @derive [Poison.Encoder]
   defstruct [:id, :time, :messaging]
 
-  @type t :: %FacebookMessenger.Entry{
+  @type t :: %__MODULE__{
     id: String.t,
     messaging: FacebookMessenger.Messaging.t,
     time: integer
