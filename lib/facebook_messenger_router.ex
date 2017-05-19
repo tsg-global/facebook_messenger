@@ -6,8 +6,8 @@ defmodule FacebookMessenger.Router do
 
   def call(conn, opts) do
     case conn.method do
-      "GET" -> do_challenge(conn, endpoint, opts)
-      "POST" -> do_message(conn, endpoint, opts)
+      "GET" -> do_challenge(conn, endpoint(), opts)
+      "POST" -> do_message(conn, endpoint(), opts)
     end
   end
 

@@ -14,6 +14,6 @@ defmodule FacebookMessenger.RequestManager.Mock do
   """
 
   def post(url: url, body: body) do
-    send(self, %{url: url, body: body})
+    send(self(), %{url: url, body: body})
   end
 end

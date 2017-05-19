@@ -12,8 +12,8 @@ defmodule FacebookMessenger.Sender do
   """
   @spec send(String.t, String.t) :: HTTPotion.Response.t
   def send(recepient, message) do
-    res = manager.post(
-      url: url,
+    res = manager().post(
+      url: url(),
       body: text_payload(recepient, message) |> to_json
     )
     Logger.info("response from FB #{inspect(res)}")
@@ -28,8 +28,8 @@ defmodule FacebookMessenger.Sender do
   """
   @spec send_image(String.t, String.t) :: HTTPotion.Response.t
   def send_image(recepient, image_url) do
-    res = manager.post(
-      url: url,
+    res = manager().post(
+      url: url(),
       body: image_payload(recepient, image_url) |> to_json
     )
     Logger.info("response fro FB #{inspect(res)}")
@@ -84,7 +84,7 @@ defmodule FacebookMessenger.Sender do
   return the url to hit to send the message
   """
   def url do
-    query = "access_token=#{page_token}"
+    query = "access_token=#{page_token()}"
     "https://graph.facebook.com/v2.6/me/messages?#{query}"
   end
 
@@ -93,6 +93,7 @@ defmodule FacebookMessenger.Sender do
   end
 
   defp manager do
-    Application.get_env(:facebook_messenger, :request_manager) || FacebookMessenger.RequestManager
+    Application.get_env(:facebook_messenger, :request_manager) ||
+      FacebookMessenger.RequestManager
   end
 end
