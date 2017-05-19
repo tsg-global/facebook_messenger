@@ -85,8 +85,10 @@ defmodule FacebookMessenger.Response do
     messaging = entries |> get_messaging_struct("messaging") |> hd
 
     cond do
-      Map.has_key?(messaging, "postback") -> postback_parser()
+      Map.has_key?(messaging, "delivery") -> delivery_parser()
       Map.has_key?(messaging, "message") -> text_message_parser()
+      Map.has_key?(messaging, "postback") -> postback_parser()
+      Map.has_key?(messaging, "read") -> read_parser()
     end
   end
 
@@ -96,19 +98,37 @@ defmodule FacebookMessenger.Response do
 
   defp postback_parser do
     %FacebookMessenger.Messaging{
-      "type": "postback",
-      "sender": %FacebookMessenger.User{},
-      "recipient": %FacebookMessenger.User{},
-      "postback": %FacebookMessenger.Postback{}
+      type: "postback",
+      sender: %FacebookMessenger.User{},
+      recipient: %FacebookMessenger.User{},
+      postback: %FacebookMessenger.Postback{}
     }
   end
 
   defp text_message_parser do
     %FacebookMessenger.Messaging{
-      "type": "message",
-      "sender": %FacebookMessenger.User{},
-      "recipient": %FacebookMessenger.User{},
-      "message": %FacebookMessenger.Message{}
+      type: "message",
+      sender: %FacebookMessenger.User{},
+      recipient: %FacebookMessenger.User{},
+      message: %FacebookMessenger.Message{}
+    }
+  end
+
+  defp delivery_parser do
+    %FacebookMessenger.Messaging{
+      type: "delivery",
+      sender: %FacebookMessenger.User{},
+      recipient: %FacebookMessenger.User{},
+      delivery: %FacebookMessenger.Delivery{}
+    }
+  end
+
+  defp read_parser do
+    %FacebookMessenger.Messaging{
+      type: "read",
+      sender: %FacebookMessenger.User{},
+      recipient: %FacebookMessenger.User{},
+      read: %FacebookMessenger.Read{}
     }
   end
 
