@@ -34,16 +34,19 @@ defmodule FacebookMessenger.Mixfile do
   #
   # Type "mix help deps" for more examples and options
   defp deps do
-    d = [{:httpotion, "~> 3.0.2"},
-         {:plug, "> 0.0.0"},
-         {:inch_ex, "> 0.0.0", only: :docs},
-         {:ex_doc, "~> 0.7", only: :dev},
-         {:earmark, "~> 0.1", only: :docs}]
+    d = [
+      {:httpotion, "~> 3.0.2"},
+      {:plug, "> 0.0.0"},
+      {:inch_ex, "> 0.0.0", only: :docs},
+      {:ex_doc, "~> 0.7", only: :dev},
+      {:earmark, "~> 0.1", only: :docs},
+      {:poison, "~> 2.1 or ~> 3.0"}
+    ]
 
     if Mix.env == :test do
-      [{:coverex, "~> 1.4.8", only: :test}, {:poison, "~> 2.1.0 or ~> 3.0", override: true} | d]
+      [{:coverex, "~> 1.4.8", only: :test} | d]
     else
-      [{:poison, "~> 2.1.0 or ~> 3.0"} | d]
+      d
     end
   end
 
