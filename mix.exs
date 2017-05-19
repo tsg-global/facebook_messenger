@@ -44,7 +44,7 @@ defmodule FacebookMessenger.Mixfile do
     ]
 
     if Mix.env == :test do
-      [{:coverex, "~> 1.4.8", only: :test} | d]
+      [{:coverex, "~> 1.4", only: :test} | d]
     else
       d
     end
