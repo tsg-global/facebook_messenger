@@ -85,15 +85,27 @@ defmodule FacebookMessenger.Response do
     messaging = entries |> get_messaging_struct("messaging") |> hd
 
     cond do
+      Map.has_key?(messaging, "account_linking") -> account_linking_parser()
       Map.has_key?(messaging, "delivery") -> delivery_parser()
       Map.has_key?(messaging, "message") -> text_message_parser()
+      Map.has_key?(messaging, "optin") -> optin_parser()
       Map.has_key?(messaging, "postback") -> postback_parser()
       Map.has_key?(messaging, "read") -> read_parser()
+      Map.has_key?(messaging, "referral") -> referral_parser()
     end
   end
 
   defp get_messaging_struct(entries, messaging_key \\ :messaging) do
     Enum.flat_map(entries, &Map.get(&1, messaging_key))
+  end
+
+  defp account_linking_parser do
+    %FacebookMessenger.Messaging{
+      type: "account_linking",
+      sender: %FacebookMessenger.User{},
+      recipient: %FacebookMessenger.User{},
+      account_linking: %FacebookMessenger.AccountLinking{}
+    }
   end
 
   defp postback_parser do
@@ -129,6 +141,24 @@ defmodule FacebookMessenger.Response do
       sender: %FacebookMessenger.User{},
       recipient: %FacebookMessenger.User{},
       read: %FacebookMessenger.Read{}
+    }
+  end
+
+  defp optin_parser do
+    %FacebookMessenger.Messaging{
+      type: "optin",
+      sender: %FacebookMessenger.User{},
+      recipient: %FacebookMessenger.User{},
+      optin: %FacebookMessenger.Optin{}
+    }
+  end
+
+  defp referral_parser do
+    %FacebookMessenger.Messaging{
+      type: "referral",
+      sender: %FacebookMessenger.User{},
+      recipient: %FacebookMessenger.User{},
+      referral: %FacebookMessenger.Referral{}
     }
   end
 
