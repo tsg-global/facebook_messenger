@@ -7,7 +7,7 @@ defmodule FacebookMessenger.Mixfile do
      source_url: "https://github.com/oarrabi/facebook_messenger",
      version: "0.4.0",
      docs: [ extras: ["README.md"] ],
-     elixir: "~> 1.0",
+     elixir: "~> 1.4",
      build_embedded: Mix.env == :prod,
      start_permanent: Mix.env == :prod,
      test_coverage: [tool: Coverex.Task, coveralls: true],
@@ -21,7 +21,7 @@ defmodule FacebookMessenger.Mixfile do
   #
   # Type "mix help compile.app" for more information
   def application do
-    [applications: [:logger, :httpotion]]
+    [extra_applications: [:logger]]
   end
 
   # Dependencies can be Hex packages:
@@ -35,7 +35,7 @@ defmodule FacebookMessenger.Mixfile do
   # Type "mix help deps" for more examples and options
   defp deps do
     d = [
-      {:httpotion, "~> 3.0.2"},
+      {:httpoison, "~> 0.10"},
       {:plug, "> 0.0.0"},
       {:inch_ex, "> 0.0.0", only: :docs},
       {:ex_doc, "~> 0.7", only: :dev},
